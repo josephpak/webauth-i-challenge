@@ -12,7 +12,8 @@ function getUsers() {
 
 function getUserBy(filter) {
     return db('users')
-        .where(filter)     
+        .where(filter)
+        .first()     
 }
 
 async function addUser(user) {
