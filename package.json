@@ -4,6 +4,7 @@
   "description": "## Topics",
   "main": "index.js",
   "scripts": {
+    "server": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,5 +23,8 @@
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "helmet": "^3.16.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
   }
 }
