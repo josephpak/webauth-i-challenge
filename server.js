@@ -7,11 +7,13 @@ const Users = require('./data/helpers/users-module.js')
 
 const restricted = require("./middleware/restricted")
 
+const exampleRouter = require("./example-router.js")
+
 const server = express();
 
 server.use(helmet());
 server.use(express.json());
-server.use(cors())
+server.use(cors());
 
 server.post('/api/register', async (req,res) => { 
     try {
@@ -24,7 +26,6 @@ server.post('/api/register', async (req,res) => {
     } catch (error) {
         res.status(500).json(error)
     }
-    
 })
 
 server.post('/api/login', async (req,res) => {
@@ -55,5 +56,11 @@ server.get('/api/users', restricted, async (req,res) => {
     }
     
 })
+
+server.use(restricted)
+
+server.use('/api/restricted', exampleRouter)
+
+// TO DO some example routes that use restricted middleware
 
 module.exports = server;
