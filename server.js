@@ -5,6 +5,8 @@ const bcrypt = require('bcryptjs');
 
 const Users = require('./data/helpers/users-module.js')
 
+const restricted = require("./middleware/restricted")
+
 const server = express();
 
 server.use(helmet());
@@ -44,7 +46,7 @@ server.post('/api/login', async (req,res) => {
     }
 })
 
-server.get('/api/users', async (req,res) => {
+server.get('/api/users', restricted, async (req,res) => {
     try {
         const users = await Users.getUsers()
         res.status(200).json(users)
