@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs')
-const Users = require('../data/helpers/users-module')
+const Users = require('../data/helpers/users-model')
 
 async function restricted (req,res,next) {
     const { username, password } = req.headers;

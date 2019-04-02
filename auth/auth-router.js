@@ -1,21 +1,11 @@
 const express = require('express');
-const helmet = require('helmet');
-const cors = require('cors');
 const bcrypt = require('bcryptjs');
 
-const Users = require('./data/helpers/users-module.js')
+const Users = require('../data/helpers/users-model.js')
 
-const restricted = require("./middleware/restricted")
+const router = express.Router();
 
-const exampleRouter = require("./example-router.js")
-
-const server = express();
-
-server.use(helmet());
-server.use(express.json());
-server.use(cors());
-
-server.post('/api/register', async (req,res) => { 
+router.post('/register', async (req,res) => { 
     try {
         let user = req.body;
         const hash = bcrypt.hashSync(user.password, 4)
@@ -28,7 +18,7 @@ server.post('/api/register', async (req,res) => {
     }
 })
 
-server.post('/api/login', async (req,res) => {
+router.post('/login', async (req,res) => {
     try {
         let { username, password } = req.body
     
@@ -47,20 +37,5 @@ server.post('/api/login', async (req,res) => {
     }
 })
 
-server.get('/api/users', restricted, async (req,res) => {
-    try {
-        const users = await Users.getUsers()
-        res.status(200).json(users)
-    } catch (error) {
-        res.status(500).json(error)
-    }
-    
-})
 
-server.use(restricted)
-
-server.use('/api/restricted', exampleRouter)
-
-// TO DO some example routes that use restricted middleware
-
-module.exports = server;
+module.exports = router;
